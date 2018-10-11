@@ -33,16 +33,11 @@ export class AddPurchasePage {
     this.barcodeScanner.scan()
       .then((barcodeData) => {
         this.top = JSON.stringify(barcodeData);
-        this.toastProvider.show(barcodeData.text, '1', 'center').subscribe(
-          toast => {
-            console.log(toast);
-          }
-        );
         return this.gcFunctionProvider.createPurchaseWithQrCodeUrl(barcodeData.text, 'TEST_TIDEVO_ID').subscribe((msg) => {
-          this.toastProvider.show(JSON.stringify(msg), '5000', 'center').subscribe(
+          this.toastProvider.show("Produto cadastrado com sucesso", '5000', 'center').subscribe(
             toast => {
               console.log(toast);
-              //this.navCtrl.push(ListPurchasePage);
+              this.navCtrl.push(ListPurchasePage);
             }
           );
         })

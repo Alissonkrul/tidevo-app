@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import { Observable } from 'rxjs-compat';
-import { map } from 'rxjs-compat/operators/map';
+import {Observable} from 'rxjs-compat';
+import {map} from 'rxjs-compat/operators/map';
 
 import {
   AngularFirestore
@@ -23,6 +23,19 @@ export class PurchaseProvider {
   getAll(): AngularFirestoreCollection<any> {
     return this.db.collection(this.PATH);
   }
-}
 
+  remove(purchaseId) {
+    return this.db.doc(`${this.PATH}/${purchaseId}`).delete();
+  }
+
+  getAll2() {
+    return this.db.collection(this.PATH).snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        let id = a.payload.doc.id;
+        return {id, ...data};
+      });
+    });
+  }
+}
 

@@ -26,14 +26,20 @@ export class ListPurchasePage {
   }
 
   ionViewDidLoad() {
-    this.purchases = this.purchaseProvider.getAll().valueChanges();
+    this.purchases = this.purchaseProvider.getAll2();
+    this.purchases.subscribe((t) => {
+      console.log(t);
+    })
   }
 
   public edit(purchase) {
     this.navCtrl.push(EditPurchasePage, {purchase})
   }
 
-  public remove() {
+  public remove(purchase) {
+    this.purchaseProvider.remove(purchase.id).then(()=>{
+      //this.ionViewDidLoad();
+    });
 
   }
 

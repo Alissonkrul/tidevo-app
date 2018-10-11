@@ -13,18 +13,20 @@
 
 
 <ion-content padding>
-      <ion-list>
-        <ion-list-header style="font-weight:bold; font-size:120%;">
-          Purchases
-        </ion-list-header>
-    <ion-item-sliding *ngFor="let purchase of purchases | async">
+  <ion-list>
+    <ion-list-header style="font-weight:bold; font-size:120%;">
+      Purchases
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let purchase of (purchases | async)">
       <ion-item>
+        <p>{{ purchase.key }}</p>
+        <p>UUID:{{ purchase.uuid }}</p>
         <p>{{ purchase.tidevoId }}</p>
         <p>{{ purchase.purchasePlace }}</p>
         <p>{{ purchase.totalValue ||currency}}</p>
       </ion-item>
-      <ion-item-options side="rigth" (click)="edit(purchase)">
-        <button ion-button color="primary">
+      <ion-item-options side="rigth"s>
+        <button ion-button color="primary" (click)="edit(purchase)">
           <ion-icon name="create"></ion-icon>
         </button>
         <button ion-button color="danger" (click)="remove(purchase)">
@@ -32,5 +34,5 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-      </ion-list>
+  </ion-list>
 </ion-content>
