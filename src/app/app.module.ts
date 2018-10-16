@@ -21,7 +21,14 @@ import {AddPurchasePage} from "../pages/add-purchase/add-purchase";
 import { GcFunctionsProvider } from '../providers/gc-functions/gc-functions';
 
 
-const firebaseConfig = {}
+const firebaseConfig = {
+    apiKey: "AIzaSyDmW53c_GHD5Kj_Fw8zE6oZw22oWoc5bv8",
+    authDomain: "tidevo-1dd03.firebaseapp.com",
+    databaseURL: "https://tidevo-1dd03.firebaseio.com",
+    projectId: "tidevo-1dd03",
+    storageBucket: "tidevo-1dd03.appspot.com",
+    messagingSenderId: "125946645217"
+  }
 ;
 
 

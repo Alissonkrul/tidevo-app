@@ -18,6 +18,31 @@
     <button ion-button color="primary" (click)="scan()">
       <ion-icon name="caemra">Scan</ion-icon>
     </button>
+
+    <ion-content padding>
+
+        <ion-item>
+          <ion-label>Lugar</ion-label>
+          <ion-input [(ngModel)]="purchase.place" placeholder="Ex: Outback"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Quem Pagou?</ion-label>
+          <ion-textarea [(ngModel)]="purchase.tidevoId" placeholder="TIDEVO_TEST"></ion-textarea>
+        </ion-item>
+        <p>Items:</p>
+        <ion-list *ngFor="let item of purchase.items; let i = index">
+          <ion-item>
+            <ion-label>Nomel</ion-label>
+            <ion-input type="text" [(ngModel)]="purchase.items[i].name" placeholder=""></ion-input>
+          </ion-item>
+        <ion-item>
+          <ion-label>Preço</ion-label>
+          <ion-input type="number" [(ngModel)]="purchase.items[i].value"></ion-input>
+        </ion-item>
+      </ion-list>
+      <button ion-button block clear (click)="addItem()">Add Item</button>
+    </ion-content>
   </ion-content>
-  <p>{{top}}</p>
+
 </ion-content>

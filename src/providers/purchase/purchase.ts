@@ -28,6 +28,14 @@ export class PurchaseProvider {
     return this.db.doc(`${this.PATH}/${purchaseId}`).delete();
   }
 
+  edit(id, purchase) {
+    return this.db.doc(`${this.PATH}/${id}`).update(purchase)
+  }
+
+  get(id) {
+    return this.db.doc(`${this.PATH}/${id}`).get()
+  }
+
   getAll2() {
     return this.db.collection(this.PATH).snapshotChanges().map(actions => {
       return actions.map(a => {

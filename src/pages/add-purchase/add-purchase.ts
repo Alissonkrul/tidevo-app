@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {BarcodeScanner} from "@ionic-native/barcode-scanner";
 import {Toast} from '@ionic-native/toast';
 import {GcFunctionsProvider} from "../../providers/gc-functions/gc-functions";
@@ -18,33 +18,53 @@ import {ListPurchasePage} from "../list-purchase/list-purchase";
   templateUrl: 'add-purchase.html',
 })
 export class AddPurchasePage {
-  top = 'top';
+  private purchase = {url: '', place: "", items: [{name: "", value: 0}]};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, private toastProvider: Toast, private gcFunctionProvider: GcFunctionsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, private toastProvider: Toast, private gcFunctionProvider: GcFunctionsProvider, public loadingController: LoadingController) {
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPurchasePage');
   }
 
-  scan() {
+  public addItem() {
+    this.purchase.items.push(
+      {
+        name: "",
+        value: 0
+      }
+    );
+    this.purchase.items.sort();
 
+  }
+
+  scan() {
+    let loader = this.loadingController.create({
+      content: "Criando Purchase"
+    });
 
     this.barcodeScanner.scan()
       .then((barcodeData) => {
-        this.top = JSON.stringify(barcodeData);
-        return this.gcFunctionProvider.createPurchaseWithQrCodeUrl(barcodeData.text, 'TEST_TIDEVO_ID').subscribe((msg) => {
-          this.toastProvider.show("Produto cadastrado com sucesso", '5000', 'center').subscribe(
-            toast => {
-              console.log(toast);
-              this.navCtrl.push(ListPurchasePage);
-            }
-          );
-        })
+        this.purchase.url = JSON.stringify(barcodeData);
+        loader.present();
+        return this.gcFunctionProvider.createPurchaseWithQrCodeUrl(barcodeData.text, 'TEST_TIDEVO_ID')
+          .subscribe((msg) => {
+            loader.dismiss();
+            this.toastProvider.show("Produto cadastrado com sucesso", '3000', 'center')
+              .subscribe(
+                toast => {
+                  this.navCtrl.setRoot(ListPurchasePage);
+                }
+              );
+          }, (err) => {
+            throw err;
+          })
       }).catch((err) => {
-      this.toastProvider.show(err, '5000', 'center').subscribe(
+      loader.dismiss();
+      this.toastProvider.show("Ops, algo deu errado :(, ERR: " + (err.code || 500), '5000', 'center').subscribe(
         toast => {
-          console.log(toast);
+          console.log(err);
         }
       );
     })

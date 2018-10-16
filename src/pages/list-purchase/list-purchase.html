@@ -18,14 +18,12 @@
       Purchases
     </ion-list-header>
     <ion-item-sliding *ngFor="let purchase of (purchases | async)">
-      <ion-item>
-        <p>{{ purchase.key }}</p>
-        <p>UUID:{{ purchase.uuid }}</p>
+      <ion-item (click)="edit(purchase)">
         <p>{{ purchase.tidevoId }}</p>
         <p>{{ purchase.purchasePlace }}</p>
         <p>{{ purchase.totalValue ||currency}}</p>
       </ion-item>
-      <ion-item-options side="rigth"s>
+      <ion-item-options side="rigth" s>
         <button ion-button color="primary" (click)="edit(purchase)">
           <ion-icon name="create"></ion-icon>
         </button>
@@ -35,4 +33,9 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="add()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

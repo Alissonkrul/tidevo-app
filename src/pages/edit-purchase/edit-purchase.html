@@ -15,14 +15,37 @@
 
 <ion-content padding>
 
-      <p>{{ purchase.tidevoId }}</p>
-      <p>{{ purchase.purchasePlace }}</p>
-      <p>{{ purchase.totalValue ||currency}}</p>
+  <p>{{ purchase.tidevoId }}</p>
+  <p>{{ purchase.purchasePlace }}</p>
+  <p>{{ purchase.totalValue ||currency}}</p>
   <ion-list>
-  <ion-item *ngFor="let item of purchase.items">
+    <ion-item *ngFor="let item of purchase.items">
 
       <p>{{ item.name }}</p>
       <p>{{ item.value }}</p>
-  </ion-item>
+    </ion-item>
   </ion-list>
-</ion-content>
+
+  <hr/>
+  <ion-item>
+    <ion-label>Lugar</ion-label>
+    <ion-input [(ngModel)]="purchase.purchasePlace" placeholder="Ex: Outback"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Quem Pagou?</ion-label>
+    <ion-textarea [(ngModel)]="purchase.tidevoId" placeholder="TIDEVO_TEST"></ion-textarea>
+  </ion-item>
+  <p>Items:</p>
+  <ion-list *ngFor="let item of purchase.items; let i = index">
+    <ion-item>
+      <ion-label>Nomel</ion-label>
+      <ion-input type="text" [(ngModel)]="purchase.items[i].name" placeholder=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Preço</ion-label>
+      <ion-input type="text" [(ngModel)]="purchase.items[i].value"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button block clear (click)="addItem()">Add Item</button>
+

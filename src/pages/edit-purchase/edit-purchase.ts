@@ -20,7 +20,6 @@ export class EditPurchasePage {
   }
 
   ionViewDidLoad() {
-
     console.log('ionViewDidLoad EditPurchasePage');
   }
 

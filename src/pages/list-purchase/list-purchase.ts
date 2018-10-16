@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {PurchaseProvider} from "../../providers/purchase/purchase";
 import {Observable} from "rxjs/Observable";
 import {EditPurchasePage} from "../edit-purchase/edit-purchase";
+import {AddPurchasePage} from "../add-purchase/add-purchase";
 
 /**
  * Generated class for the ListPurchasePage page.
@@ -20,13 +21,11 @@ export class ListPurchasePage {
   purchases: Observable<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private purchaseProvider: PurchaseProvider) {
-
     console.log('ionViewDidLoad ListPurchasePage');
-    //this.purchases = this.purchaseProvider.getAll();
+    this.purchases = this.purchaseProvider.getAll2();
   }
 
   ionViewDidLoad() {
-    this.purchases = this.purchaseProvider.getAll2();
     this.purchases.subscribe((t) => {
       console.log(t);
     })
@@ -36,8 +35,12 @@ export class ListPurchasePage {
     this.navCtrl.push(EditPurchasePage, {purchase})
   }
 
+  public add() {
+    this.navCtrl.push(AddPurchasePage);
+  }
+
   public remove(purchase) {
-    this.purchaseProvider.remove(purchase.id).then(()=>{
+    this.purchaseProvider.remove(purchase.id).then(() => {
       //this.ionViewDidLoad();
     });
 
